@@ -1,0 +1,20 @@
+meta {
+  name: RefreshResetToken
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}/api/auth/refresh
+  body: json
+  auth: none
+}
+
+body:json {
+  { "refreshToken": "0e1d2c65086fbf343cf235d4de8d9e61fcac7ed97f7b6330e7f12da68a0c220a7c6b60779ebbe3e9" }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

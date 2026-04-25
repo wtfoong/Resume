@@ -1,0 +1,21 @@
+meta {
+  name: LoginTest
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  { "email": "wtfoong81@gmail.com",
+   "password": "your_password_here" }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

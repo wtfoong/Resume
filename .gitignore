@@ -30,3 +30,9 @@ Thumbs.db
 *.sqlite
 *.sqlite3
  
+
+#── Miscellaneous ─────────────────────────────────────────────
+CLAUDE.md
+
+# One-time admin scripts
+scripts/createAdmin.js
