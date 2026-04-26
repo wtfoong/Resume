@@ -1,0 +1,25 @@
+meta {
+  name: Update-Experience
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{URL}}/api/admin/experience/your_experience_id_here
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "role": "Senior Software Engineer",
+   "is_current": true }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

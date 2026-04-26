@@ -1,30 +1,28 @@
-const db = require('./db');
+const { db, findAll, findBy } = require('./db');
 
-const findProfile = () => db('profile').first();
+const findProfile = () => findBy('profile', {}, { first: true });
 
 const findContactsByProfileId = (profileId) =>
-  db('contacts').where({ profile_id: profileId }).orderBy('sort_order');
+  findBy('contacts', { profile_id: profileId }, { orderBy: 'sort_order' });
 
-const findAllExperience = () =>
-  db('experience').orderBy('sort_order');
+const findAllExperience = () => findAll('experience', { orderBy: 'sort_order' });
 
 const findExperienceDetails = (experienceId) =>
-  db('experience_details').where({ experience_id: experienceId }).orderBy('sort_order');
+  findBy('experience_details', { experience_id: experienceId }, { orderBy: 'sort_order' });
 
-const findAllEducation = () =>
-  db('education').orderBy('sort_order');
+const findAllEducation = () => findAll('education', { orderBy: 'sort_order' });
 
 const findEducationDetails = (educationId) =>
-  db('education_details').where({ education_id: educationId }).orderBy('sort_order');
+  findBy('education_details', { education_id: educationId }, { orderBy: 'sort_order' });
 
 const findAllSkills = () =>
   db('skills').orderBy('category').orderBy('sort_order');
 
 const findPublishedProjects = () =>
-  db('projects').where({ is_published: true }).orderBy('sort_order');
+  findBy('projects', { is_published: true }, { orderBy: 'sort_order' });
 
 const findProjectTags = (projectId) =>
-  db('project_tags').where({ project_id: projectId }).orderBy('sort_order').pluck('tag');
+  findBy('project_tags', { project_id: projectId }, { orderBy: 'sort_order', pluck: 'tag' });
 
 module.exports = {
   findProfile,

@@ -1,0 +1,25 @@
+meta {
+  name: Update-Profile
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{URL}}/api/admin/profile
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "full_name": "Foong Wai Tuck",
+   "location": "Singapore" }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

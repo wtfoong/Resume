@@ -1,0 +1,25 @@
+meta {
+  name: Update-Project-Tag
+  type: http
+  seq: 24
+}
+
+put {
+  url: {{URL}}/api/admin/project-tags/your_tag_id_here
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "tag": "Express.js",
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

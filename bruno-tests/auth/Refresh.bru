@@ -1,18 +1,17 @@
 meta {
-  name: LoginTest
+  name: Refresh
   type: http
   seq: 2
 }
 
 post {
-  url: {{URL}}/api/auth/login
+  url: {{URL}}/api/auth/refresh
   body: json
   auth: none
 }
 
 body:json {
-  { "email": "wtfoong81@gmail.com",
-   "password": "your_password_here" }
+  { "refreshToken": "{{refreshToken}}" }
 }
 
 settings {

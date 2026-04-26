@@ -1,0 +1,28 @@
+meta {
+  name: Create-Contact
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL}}/api/admin/contacts
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "profile_id": "your_profile_id_here",
+   "label": "LinkedIn",
+   "value": "linkedin.com/in/wtfoong",
+   "url": "https://linkedin.com/in/wtfoong",
+   "sort_order": 5 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

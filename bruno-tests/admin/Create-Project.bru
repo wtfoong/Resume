@@ -1,0 +1,29 @@
+meta {
+  name: Create-Project
+  type: http
+  seq: 20
+}
+
+post {
+  url: {{URL}}/api/admin/projects
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "title": "New Project",
+   "description": "Project description here.",
+   "github_url": "https://github.com/wtfoong/new-project",
+   "live_url": null,
+   "is_published": true,
+   "sort_order": 4 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Update-Skill
+  type: http
+  seq: 18
+}
+
+put {
+  url: {{URL}}/api/admin/skills/your_skill_id_here
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "name": "React",
+   "sort_order": 7 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

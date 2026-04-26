@@ -1,0 +1,27 @@
+meta {
+  name: ChangeEmail
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{URL}}/api/admin/auth/change-email
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg0ZDBlMzI3LTI5MzMtNGE3OC1hNGQ0LTRjNjQ5NWNjMWYzNiIsImVtYWlsIjoid3Rmb29uZzgxQGdtYWlsLmNvbSIsImlhdCI6MTc3NzE2MjIzNSwiZXhwIjoxNzc3MTYzMTM1fQ.6E5qzxqdVLeaHcQK8AkiNcxo-GJWRz56lIbcVO-kVDw
+}
+
+body:json {
+  {
+    "newEmail": "wtfoong81@gmail.com",
+    "password": "your_password_here"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

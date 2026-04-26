@@ -1,0 +1,26 @@
+meta {
+  name: Create-Experience-Detail
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{URL}}/api/admin/experience-details
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "experience_id": "your_experience_id_here",
+   "detail": "Built and maintained REST APIs using Node.js and Express.",
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

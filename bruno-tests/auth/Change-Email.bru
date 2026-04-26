@@ -1,0 +1,25 @@
+meta {
+  name: Change-Email
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{URL}}/api/admin/auth/change-email
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: your_access_token_here
+}
+
+body:json {
+  { "newEmail": "newemail@gmail.com",
+   "password": "your_password_here" }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

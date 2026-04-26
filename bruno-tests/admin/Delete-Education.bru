@@ -1,0 +1,20 @@
+meta {
+  name: Delete-Education
+  type: http
+  seq: 13
+}
+
+delete {
+  url: {{URL}}/api/admin/education/your_education_id_here
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

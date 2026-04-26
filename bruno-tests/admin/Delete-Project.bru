@@ -1,0 +1,20 @@
+meta {
+  name: Delete-Project
+  type: http
+  seq: 22
+}
+
+delete {
+  url: {{URL}}/api/admin/projects/your_project_id_here
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

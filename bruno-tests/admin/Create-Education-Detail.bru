@@ -1,0 +1,26 @@
+meta {
+  name: Create-Education-Detail
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{URL}}/api/admin/education-details
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "education_id": "your_education_id_here",
+   "detail": "Technical Assistance - Organiser of The Ultimate Typing Competition (2021).",
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

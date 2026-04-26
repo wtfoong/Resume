@@ -1,0 +1,25 @@
+meta {
+  name: Update-Education-Detail
+  type: http
+  seq: 15
+}
+
+put {
+  url: {{URL}}/api/admin/education-details/your_detail_id_here
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "detail": "Updated detail text here.",
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

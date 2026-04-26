@@ -1,0 +1,26 @@
+meta {
+  name: Create-Skill
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{URL}}/api/admin/skills
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "category": "Frameworks & Tools",
+   "name": "React",
+   "sort_order": 7 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

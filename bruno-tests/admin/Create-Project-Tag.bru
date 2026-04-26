@@ -1,0 +1,26 @@
+meta {
+  name: Create-Project-Tag
+  type: http
+  seq: 23
+}
+
+post {
+  url: {{URL}}/api/admin/project-tags
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "project_id": "your_project_id_here",
+   "tag": "Node.js",
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

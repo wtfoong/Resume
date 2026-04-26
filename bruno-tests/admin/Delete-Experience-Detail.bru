@@ -1,0 +1,20 @@
+meta {
+  name: Delete-Experience-Detail
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{URL}}/api/admin/experience-details/your_detail_id_here
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

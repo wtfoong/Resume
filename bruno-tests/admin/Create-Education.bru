@@ -1,0 +1,30 @@
+meta {
+  name: Create-Education
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{URL}}/api/admin/education
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  { "institution": "Asia Pacific University",
+   "degree": "Bachelor of Science (Hons)",
+   "field": "Software Engineering",
+   "start_date": "2021-05-01",
+   "end_date": "2023-03-31",
+   "gpa": 3.89,
+   "sort_order": 1 }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
