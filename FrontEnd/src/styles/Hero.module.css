@@ -1,0 +1,98 @@
+.hero {
+  padding: 5rem 3rem 2rem;
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 3rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.heading {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+.heading em {
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.contactPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.75rem;
+  border-radius: 2rem;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.contactPill:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.badge {
+  align-self: start;
+  padding-top: 2rem;
+}
+
+.badgeRing {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink-3);
+  text-align: center;
+  line-height: 1.5;
+  position: relative;
+  background: var(--paper-2);
+}
+
+.badgeDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 7rem 1.5rem 3.5rem; grid-template-columns: 1fr; }
+  .badge { display: none; }
+}

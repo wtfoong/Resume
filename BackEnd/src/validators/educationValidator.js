@@ -6,7 +6,7 @@ const createEducationSchema = Joi.object({
   field:       Joi.string().max(150).optional().allow('', null),
   start_date:  Joi.date().required(),
   end_date:    Joi.date().optional().allow(null),
-  gpa:         Joi.number().precision(2).optional().allow(null),
+  gpa: 		   Joi.number().min(0).max(5).precision(2).optional().allow(null),
   sort_order:  Joi.number().integer().optional(),
 });
 
@@ -16,7 +16,7 @@ const updateEducationSchema = Joi.object({
   field:       Joi.string().max(150).allow('', null),
   start_date:  Joi.date(),
   end_date:    Joi.date().allow(null),
-  gpa:         Joi.number().precision(2).allow(null),
+  gpa:         Joi.number().min(0).max(5).precision(2).allow(null),
   sort_order:  Joi.number().integer(),
 }).min(1);
 

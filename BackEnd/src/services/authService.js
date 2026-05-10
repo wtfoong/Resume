@@ -6,6 +6,8 @@ const { sendPasswordResetEmail } = require('./emailService');
 const AppError = require('../utils/AppError');
 require('dotenv').config();
 
+const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
 const login = async (email, password) => {
   const admin = await authRepo.findAdminByEmail(email);
   if (!admin) throw new AppError('Invalid credentials', 401);
@@ -22,10 +24,42 @@ const login = async (email, password) => {
   );
 
   const refreshToken = crypto.randomBytes(40).toString('hex');
-  const refreshExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const refreshExpiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS);
   await authRepo.saveRefreshToken(admin.id, refreshToken, refreshExpiresAt);
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, refreshExpiresAt };
+};
+
+const refresh = async (refreshToken) => {
+  if (!refreshToken) throw new AppError('Refresh token required', 401);
+
+  const admin = await authRepo.findAdminByRefreshToken(refreshToken);
+  if (!admin) throw new AppError('Invalid refresh token', 401);
+
+  const isExpired = new Date() > new Date(admin.refresh_token_expires_at);
+  if (isExpired) {
+    await authRepo.clearRefreshToken(admin.id);
+    throw new AppError('Refresh token expired, please login again', 401);
+  }
+
+  // rotation — generate new refresh token, invalidate old one
+  const newRefreshToken = crypto.randomBytes(40).toString('hex');
+  const newRefreshExpiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS);
+  await authRepo.saveRefreshToken(admin.id, newRefreshToken, newRefreshExpiresAt);
+
+  const accessToken = jwt.sign(
+    { id: admin.id, email: admin.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' }
+  );
+
+  return { accessToken, newRefreshToken, newRefreshExpiresAt };
+};
+
+const logout = async (refreshToken) => {
+  if (!refreshToken) return;
+  const admin = await authRepo.findAdminByRefreshToken(refreshToken);
+  if (admin) await authRepo.clearRefreshToken(admin.id);
 };
 
 const forgotPassword = async (email) => {
@@ -36,7 +70,6 @@ const forgotPassword = async (email) => {
   const expiresAt = new Date(
     Date.now() + process.env.RESET_TOKEN_EXPIRY_MINUTES * 60 * 1000
   );
-
   await authRepo.saveResetToken(admin.id, token, expiresAt);
   await sendPasswordResetEmail(email, token);
 };
@@ -77,31 +110,8 @@ const changeEmail = async (adminId, newEmail, password) => {
   await authRepo.updateAdminEmail(adminId, newEmail);
 };
 
-const refresh = async (refreshToken) => {
-  if (!refreshToken) throw new AppError('Refresh token required', 400);
-
-  const admin = await authRepo.findAdminByRefreshToken(refreshToken);
-  if (!admin) throw new AppError('Invalid refresh token', 401);
-
-  const isExpired = new Date() > new Date(admin.refresh_token_expires_at);
-  if (isExpired) {
-    await authRepo.clearRefreshToken(admin.id);
-    throw new AppError('Refresh token expired, please login again', 401);
-  }
-
-  const accessToken = jwt.sign(
-    { id: admin.id, email: admin.email },
-    process.env.JWT_SECRET,
-    { expiresIn: '15m' }
-  );
-
-  return { accessToken };
+module.exports = {
+  login, refresh, logout,
+  forgotPassword, resetPassword,
+  changePassword, changeEmail,
 };
-
-const logout = async (refreshToken) => {
-  if (!refreshToken) return;
-  const admin = await authRepo.findAdminByRefreshToken(refreshToken);
-  if (admin) await authRepo.clearRefreshToken(admin.id);
-};
-
-module.exports = { login, forgotPassword, resetPassword, changePassword, changeEmail, refresh, logout };

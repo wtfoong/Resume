@@ -1,12 +1,45 @@
 const authService = require('../services/authService');
 const AppError = require('../utils/AppError');
 
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'strict',
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
+
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body || {};
     if (!email || !password) return next(new AppError('Email and password are required', 400));
-    const result = await authService.login(email, password);
-    res.json(result);
+    const { accessToken, refreshToken, refreshExpiresAt } = await authService.login(email, password);
+    res.cookie('refreshToken', refreshToken, {
+      ...COOKIE_OPTIONS,
+      expires: refreshExpiresAt,
+    });
+    res.json({ accessToken });
+  } catch (err) { next(err); }
+};
+
+const refresh = async (req, res, next) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken;
+    if (!refreshToken) return next(new AppError('Refresh token required', 401));
+    const { accessToken, newRefreshToken, newRefreshExpiresAt } = await authService.refresh(refreshToken);
+    res.cookie('refreshToken', newRefreshToken, {
+      ...COOKIE_OPTIONS,
+      expires: newRefreshExpiresAt,
+    });
+    res.json({ accessToken });
+  } catch (err) { next(err); }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken;
+    await authService.logout(refreshToken);
+    res.clearCookie('refreshToken', COOKIE_OPTIONS);
+    res.json({ message: 'Logged out successfully' });
   } catch (err) { next(err); }
 };
 
@@ -46,21 +79,8 @@ const changeEmail = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-const refresh = async (req, res, next) => {
-  try {
-    const { refreshToken } = req.body || {};
-    if (!refreshToken) return next(new AppError('Refresh token is required', 400));
-    const result = await authService.refresh(refreshToken);
-    res.json(result);
-  } catch (err) { next(err); }
+module.exports = {
+  login, refresh, logout,
+  forgotPassword, resetPassword,
+  changePassword, changeEmail,
 };
-
-const logout = async (req, res, next) => {
-  try {
-    const { refreshToken } = req.body || {};
-    await authService.logout(refreshToken);
-    res.json({ message: 'Logged out successfully' });
-  } catch (err) { next(err); }
-};
-
-module.exports = { login, forgotPassword, resetPassword, changePassword, changeEmail, refresh, logout };

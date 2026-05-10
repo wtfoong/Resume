@@ -7,5 +7,6 @@ router.get('/experience', resumeCtrl.getExperience);
 router.get('/education',  resumeCtrl.getEducation);
 router.get('/skills',     resumeCtrl.getSkills);
 router.get('/projects',   resumeCtrl.getProjects);
+router.get('/skills/raw', resumeCtrl.getSkillsRaw);
 
 module.exports = router;

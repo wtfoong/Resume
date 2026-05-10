@@ -1,9 +1,9 @@
 const { insert, update, deleteById } = require('../db');
 
-const TABLE = 'experience_details';
+const TABLE = 'education_details';
 
-const createExperienceDetail = (data) => insert(TABLE, data);
-const updateExperienceDetail = (id, data) => update(TABLE, id, data);
-const deleteExperienceDetail = (id) => deleteById(TABLE, id);
+const createEducationDetail = (data) => insert(TABLE, data);
+const updateEducationDetail = (id, data) => update(TABLE, id, data);
+const deleteEducationDetail = (id) => deleteById(TABLE, id);
 
-module.exports = { createExperienceDetail, updateExperienceDetail, deleteExperienceDetail };
+module.exports = { createEducationDetail, updateEducationDetail, deleteEducationDetail };

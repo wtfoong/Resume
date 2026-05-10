@@ -5,5 +5,6 @@ const getExperience = async (req, res, next) => { try { res.json(await service.g
 const getEducation  = async (req, res, next) => { try { res.json(await service.getEducation());  } catch (e) { next(e); } };
 const getSkills     = async (req, res, next) => { try { res.json(await service.getSkills());     } catch (e) { next(e); } };
 const getProjects   = async (req, res, next) => { try { res.json(await service.getProjects());   } catch (e) { next(e); } };
+const getSkillsRaw  = async (req, res, next) => { try { res.json(await service.getSkillsRaw());  } catch (e) { next(e); } };
 
-module.exports = { getProfile, getExperience, getEducation, getSkills, getProjects };
+module.exports = { getProfile, getExperience, getEducation, getSkills, getProjects, getSkillsRaw };

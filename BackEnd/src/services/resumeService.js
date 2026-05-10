@@ -36,8 +36,11 @@ const getProjects = async () => {
   const projects = await repo.findPublishedProjects();
   for (const project of projects) {
     project.tags = await repo.findProjectTags(project.id);
+    // tags now = [{ id, project_id, tag, sort_order }]
   }
   return projects;
 };
 
-module.exports = { getProfile, getExperience, getEducation, getSkills, getProjects };
+const getSkillsRaw = async () => repo.findAllSkillsRaw();
+
+module.exports = { getProfile, getExperience, getEducation, getSkills, getProjects, getSkillsRaw };

@@ -35,4 +35,13 @@ Thumbs.db
 CLAUDE.md
 
 # One-time admin scripts
-scripts/createAdmin.js
+scripts/
+
+# Vite specific
+dist-ssr
+*.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

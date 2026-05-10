@@ -22,7 +22,9 @@ const findPublishedProjects = () =>
   findBy('projects', { is_published: true }, { orderBy: 'sort_order' });
 
 const findProjectTags = (projectId) =>
-  findBy('project_tags', { project_id: projectId }, { orderBy: 'sort_order', pluck: 'tag' });
+  findBy('project_tags', { project_id: projectId }, { orderBy: 'sort_order' });
+
+const findAllSkillsRaw = () => findAll('skills', { orderBy: 'sort_order' });
 
 module.exports = {
   findProfile,
@@ -34,4 +36,5 @@ module.exports = {
   findAllSkills,
   findPublishedProjects,
   findProjectTags,
+  findAllSkillsRaw
 };

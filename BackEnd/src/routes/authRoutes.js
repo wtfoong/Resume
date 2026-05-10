@@ -17,6 +17,11 @@ router.post('/logout',                                           authCtrl.logout
 router.post('/forgot-password', validate(forgotPasswordSchema),  authCtrl.forgotPassword);
 router.post('/reset-password',  validate(resetPasswordSchema),   authCtrl.resetPassword);
 
+// verify access token
+router.get('/verify', verifyToken, (req, res) => {
+  res.json({ valid: true, admin: req.admin });
+});
+
 router.put('/admin/change-password', verifyToken, validate(changePasswordSchema), authCtrl.changePassword);
 router.put('/admin/change-email',    verifyToken, validate(changeEmailSchema),    authCtrl.changeEmail);
 
